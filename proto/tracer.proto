@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "ebpf-tracer/proto;proto";
+
+import "google/protobuf/timestamp.proto";
+
+package tracer;
+
+service TracerService {
+  rpc StreamEvents(EventRequest) returns (stream Event) {}
+}
+
+message EventRequest {
+  repeated uint32 pids = 1;
+  repeated string types = 2;
+}
+
+message Event {
+  string type = 1;
+  uint32 pid = 2;
+  string comm = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  string details = 5;
+}
