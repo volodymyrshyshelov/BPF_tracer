@@ -30,3 +30,16 @@ source ~/.bashrc
 
 # Install Python dependencies
 pip install PyQt6 grpcio
+
+
+
+cd /home/volodymyr/ebpf-tracer
+sudo ./bin/tracer --pid=0 --events=execve,open,read,write,accept,connect,clone,exit,tcp_conn,uprobe --sampling=1
+
+
+cd /home/volodymyr/ebpf-tracer
+python3 ui/main.py
+
+
+make build
+./install_ebpf_tracer.sh

@@ -12,7 +12,6 @@ all: build
 
 build-ebpf:
 	clang -O2 -g -Wall -target bpf -D__TARGET_ARCH_$(BPF_ARCH) -I. -c bpf/tracer.bpf.c -o bpf/tracer.bpf.o
-	clang -O2 -g -Wall -target bpf -D__TARGET_ARCH_$(BPF_ARCH) -I. -c bpf/uprobes.bpf.c -o bpf/uprobes.bpf.o
 
 generate-proto:
 	protoc --go_out=. --go_opt=paths=source_relative \
@@ -26,7 +25,7 @@ build-go: generate-proto
 build: build-ebpf build-go
 
 run-tracer:
-	sudo ./bin/tracer --pid=0 --events=execve,open,tcp,uprobe --sampling=1
+	sudo ./bin/tracer --pid=0 --events=execve,open,read,write,accept,connect,clone,exit,tcp_conn,uprobe --sampling=1
 
 run-ui:
 	python ui/main.py
